@@ -237,7 +237,7 @@ The protocol front-door gates the version and binds the message into the journey
 from algovoi_fabric import compose_protocol_chain, verify, supported_matrix
 
 supported_matrix()
-# {'a2a': ['0.3', '1.0.1'], 'ap2': ['0.1'], 'mpp': ['2'], 'x402': ['1', '2']}
+# {'x402': ['1', '2'], 'ap2': ['0.1', '0.2'], 'mpp': ['2'], 'a2a': ['0.3', '1.0.1']}
 
 chain = compose_protocol_chain("x402", "2", {"amount": 250, "currency": "USD"})
 assert verify(chain).ok        # offline; the real keystone verifier recomputes it

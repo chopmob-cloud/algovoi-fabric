@@ -37,3 +37,22 @@ describe('protocol parity (golden)', () => {
     });
   }
 });
+
+describe('ap2 v0.2 additive widen', () => {
+  it('supports both 0.1 and 0.2 (additive, not a swap)', () => {
+    const m = supportedMatrix();
+    expect(m.ap2).toContain('0.1');
+    expect(m.ap2).toContain('0.2');
+  });
+  it('a v0.2-labelled message binds by content address and verifies', () => {
+    const msg = { amount: '500', currency: 'USD' };
+    const face = protocolFace('ap2', '0.2', msg);
+    expect(face.version).toBe('0.2');
+    expect(face.protocol).toBe('ap2');
+    const chain = composeProtocolChain('ap2', '0.2', msg);
+    expect(verify(chain).ok).toBe(true);
+  });
+  it('still refuses an unsupported ap2 version', () => {
+    expect(() => checkVersion('ap2', '1.0')).toThrow(ProtocolError);
+  });
+});

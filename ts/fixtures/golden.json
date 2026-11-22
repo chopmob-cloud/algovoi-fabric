@@ -369,6 +369,48 @@
       "verify_ok": true
     },
     {
+      "id": "proto_ap2_0.2",
+      "protocol": "ap2",
+      "version": "0.2",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "ap2",
+        "version": "0.2",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "ap2",
+              "version": "0.2",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:eaa47172038275bac23253bca18be6dc00c398cf5e085590e6bf3893b21d63e3"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:f296b0ae272dec81c9c0ed6a828fb571224bad57ca8d2073018cae357df1ad88"
+          }
+        ],
+        "description": "ap2 v0.2 journey"
+      },
+      "verify_ok": true
+    },
+    {
       "id": "proto_mpp_2",
       "protocol": "mpp",
       "version": "2",
@@ -741,7 +783,8 @@
       "2"
     ],
     "ap2": [
-      "0.1"
+      "0.1",
+      "0.2"
     ],
     "mpp": [
       "2"

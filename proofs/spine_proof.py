@@ -204,9 +204,9 @@ def main() -> int:
 
     # == 2. Protocol front-door: fail-closed version gate =====================
     green("P01 supported matrix is the declared set",
-          lambda: _assert(supported_matrix() == {"x402": ["1", "2"], "ap2": ["0.1"],
+          lambda: _assert(supported_matrix() == {"x402": ["1", "2"], "ap2": ["0.1", "0.2"],
                                                  "mpp": ["2"], "a2a": ["0.3", "1.0.1"]}))
-    for proto, ver in [("x402", "1"), ("x402", "2"), ("ap2", "0.1"), ("mpp", "2"),
+    for proto, ver in [("x402", "1"), ("x402", "2"), ("ap2", "0.1"), ("ap2", "0.2"), ("mpp", "2"),
                        ("a2a", "0.3"), ("a2a", "1.0.1")]:
         green(f"P02 {proto} v{ver} composes+verifies",
               lambda p=proto, v=ver: _assert(verify(compose_protocol_chain(p, v, {"amount": 250})).ok))

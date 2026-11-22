@@ -12,7 +12,7 @@ Supported matrix (provenance):
   * x402  "1", "2"   - HTTP 402; v1 legacy ``x-payment`` and v2
                        ``PAYMENT-SIGNATURE`` are both present in the estate
                        adapter (x402_adapter.py).
-  * ap2   "0.1"      - SD-JWT+kb IntentMandate / CartMandate.
+  * ap2   "0.1", "0.2" - SD-JWT+kb IntentMandate / CartMandate.
   * mpp   "2"        - IETF draft payment auth (version 2).
   * a2a   "0.3", "1.0.1" - JSON-RPC agent-to-agent; 0.3 is pack-proven
                        (keystone_4proto_pack.json), 1.0.1 is graph-EVIDENCED.
@@ -39,7 +39,7 @@ FACE_ACTION_TYPE = "protocol:face"
 # deliberate act that must be backed by a conformance proof, not a default.
 SUPPORTED_VERSIONS: dict[str, frozenset[str]] = {
     "x402": frozenset({"1", "2"}),
-    "ap2": frozenset({"0.1"}),
+    "ap2": frozenset({"0.1", "0.2"}),
     "mpp": frozenset({"2"}),
     "a2a": frozenset({"0.3", "1.0.1"}),
 }

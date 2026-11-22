@@ -30,7 +30,7 @@ def test_matrix_is_declared_and_sorted():
     m = supported_matrix()
     assert m == {
         "x402": ["1", "2"],
-        "ap2": ["0.1"],
+        "ap2": ["0.1", "0.2"],
         "mpp": ["2"],
         "a2a": ["0.3", "1.0.1"],
     }
@@ -72,7 +72,7 @@ def test_unknown_protocol_fails_closed(protocol):
 
 
 @pytest.mark.parametrize("protocol,version", [
-    ("x402", "3"), ("x402", "0"), ("ap2", "0.2"), ("ap2", "1.0"),
+    ("x402", "3"), ("x402", "0"), ("ap2", "1.0"),
     ("mpp", "1"), ("mpp", "3"), ("a2a", "0.2"), ("a2a", "2.0"),
 ])
 def test_unsupported_version_fails_closed(protocol, version):
@@ -129,3 +129,26 @@ def test_execution_override_cannot_unbind_face():
 def test_execution_override_must_be_dict():
     with pytest.raises(ProtocolError):
         compose_protocol_chain("mpp", "2", MSG, execution="nope")
+
+
+def test_ap2_v0_2_conformance_additive():
+    """AP2 v0.2 is a supported face ALONGSIDE v0.1 (additive widen, not a swap).
+
+    Fabric's face is version-agnostic: it gates the version label and binds the
+    caller's message by content address. This pins that a v0.2-labelled AP2
+    message binds to the independent estate reference, composes+verifies, and
+    flows through the AV-RAILS journey. It does NOT assert AP2 v0.2 mandate
+    crypto semantics (Fabric never parses the wire schema).
+    """
+    assert "0.1" in SUPPORTED_VERSIONS["ap2"], "v0.1 must remain supported"
+    assert "0.2" in SUPPORTED_VERSIONS["ap2"], "v0.2 must be added"
+    msg = {"amount": "500", "currency": "USD"}
+    face = protocol_face("ap2", "0.2", msg)
+    assert face["version"] == "0.2"
+    assert face["message_ref"] == keystone_ref(msg)  # independent reference
+    chain = compose_protocol_chain("ap2", "0.2", msg)
+    assert verify(chain).ok
+    journey = compose_journey(
+        chain, archive={"doc_hash": "sha256:" + "ab" * 32, "entry_id": "e1", "seq": 1}
+    )
+    assert verify_journey(journey)["ok"] is True

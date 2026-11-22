@@ -25,7 +25,7 @@ export const FACE_ACTION_TYPE = 'protocol:face';
 /** The protocol/version matrix this edition binds. */
 export const SUPPORTED_VERSIONS: Record<string, Set<string>> = {
   x402: new Set(['1', '2']),
-  ap2: new Set(['0.1']),
+  ap2: new Set(['0.1', '0.2']),
   mpp: new Set(['2']),
   a2a: new Set(['0.3', '1.0.1']),
 };
