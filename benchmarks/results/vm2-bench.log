@@ -1,0 +1,39 @@
+operation                                         ops/s     p50 us     p95 us     p99 us        n
+------------------------------------------------------------------------------------------------
+compose_chain (5-link AV-RAILS)                  4493.8    197.160    349.767    437.583    20000
+verify (AV-RAILS chain)                          4715.1    191.770    323.077    425.810    20000
+compose_protocol_chain (x402 v2)                12602.7     67.196    132.469    173.386    20000
+protocol_face (x402 v2)                         64867.0     12.733     27.462     45.576    50000
+check_version (x402 v2)                       2366928.6      0.231      0.381      0.451   200000
+supported_matrix                               576533.2      1.393      2.274      3.186   200000
+archive_binding_ref (AV-VCS)                    61083.2     13.254     32.511     44.613   100000
+ac2_binding_ref                                 80746.8     11.000     19.788     37.330   100000
+verify_ac2_consent (consent_present)             4479.1    214.944    299.281    359.255    10000
+verify_ac2_consent (sender_bound)                4387.0    219.491    287.971    342.172    10000
+compose_ac2_chain                                3777.5    253.476    344.577    408.627    10000
+ac2_attestation                                  4600.1    205.266    266.981    351.309    10000
+verify_ac2_attestation                           4200.0    225.434    340.720    378.429    10000
+verify_ac2_attestation (sender_bound)            4322.5    223.499    301.096    372.680    10000
+compose_journey (rails+pef+vcs+ac2)              1606.4    591.612    922.532   1085.579     3000
+verify_journey (rails+pef+vcs+ac2)               1773.6    537.619    785.213    952.328     3000
+verify_journey (sender_bound ac2)                1710.6    560.633    764.525    957.758     3000
+
+Parallel peak (ProcessPoolExecutor, observed aggregate):
+  verify_journey (full)              workers= 2 aggregate=      2845.7 ops/s speedup=1.6x
+  verify_ac2_consent                 workers= 2 aggregate=      7473.1 ops/s speedup=1.67x
+
+wrote /work/bench-results.json
+{
+  "host": "3af25c2063cf",
+  "system": "Linux 6.8.0-136-generic",
+  "machine": "x86_64",
+  "cpu_model": "AMD EPYC-Milan Processor",
+  "cpu_count": 2,
+  "python": "3.12.16",
+  "algovoi_fabric": "0.3.1",
+  "avm_ac2": "0.1.0",
+  "avm_mesh": "0.13.6",
+  "fabric_module_file": "/work/venv-test/lib/python3.12/site-packages/algovoi_fabric/__init__.py",
+  "timestamp_utc": "2026-11-22T16:16:58Z",
+  "scale": 1.0
+}

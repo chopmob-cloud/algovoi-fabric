@@ -1,0 +1,172 @@
+{
+  "environment": {
+    "host": "3af25c2063cf",
+    "system": "Linux 6.8.0-136-generic",
+    "machine": "x86_64",
+    "cpu_model": "AMD EPYC-Milan Processor",
+    "cpu_count": 2,
+    "python": "3.12.16",
+    "algovoi_fabric": "0.3.1",
+    "avm_ac2": "0.1.0",
+    "avm_mesh": "0.13.6",
+    "fabric_module_file": "/work/venv-test/lib/python3.12/site-packages/algovoi_fabric/__init__.py",
+    "timestamp_utc": "2026-11-22T16:16:58Z",
+    "scale": 1.0
+  },
+  "single_thread": {
+    "compose_chain (5-link AV-RAILS)": {
+      "n": 20000,
+      "ops_per_s": 4493.8,
+      "mean_us": 222.005,
+      "p50_us": 197.16,
+      "p95_us": 349.767,
+      "p99_us": 437.583
+    },
+    "verify (AV-RAILS chain)": {
+      "n": 20000,
+      "ops_per_s": 4715.1,
+      "mean_us": 211.579,
+      "p50_us": 191.77,
+      "p95_us": 323.077,
+      "p99_us": 425.81
+    },
+    "compose_protocol_chain (x402 v2)": {
+      "n": 20000,
+      "ops_per_s": 12602.7,
+      "mean_us": 78.981,
+      "p50_us": 67.196,
+      "p95_us": 132.469,
+      "p99_us": 173.386
+    },
+    "protocol_face (x402 v2)": {
+      "n": 50000,
+      "ops_per_s": 64867.0,
+      "mean_us": 15.157,
+      "p50_us": 12.733,
+      "p95_us": 27.462,
+      "p99_us": 45.576
+    },
+    "check_version (x402 v2)": {
+      "n": 200000,
+      "ops_per_s": 2366928.6,
+      "mean_us": 0.256,
+      "p50_us": 0.231,
+      "p95_us": 0.381,
+      "p99_us": 0.451
+    },
+    "supported_matrix": {
+      "n": 200000,
+      "ops_per_s": 576533.2,
+      "mean_us": 1.533,
+      "p50_us": 1.393,
+      "p95_us": 2.274,
+      "p99_us": 3.186
+    },
+    "archive_binding_ref (AV-VCS)": {
+      "n": 100000,
+      "ops_per_s": 61083.2,
+      "mean_us": 16.049,
+      "p50_us": 13.254,
+      "p95_us": 32.511,
+      "p99_us": 44.613
+    },
+    "ac2_binding_ref": {
+      "n": 100000,
+      "ops_per_s": 80746.8,
+      "mean_us": 12.163,
+      "p50_us": 11.0,
+      "p95_us": 19.788,
+      "p99_us": 37.33
+    },
+    "verify_ac2_consent (consent_present)": {
+      "n": 10000,
+      "ops_per_s": 4479.1,
+      "mean_us": 222.639,
+      "p50_us": 214.944,
+      "p95_us": 299.281,
+      "p99_us": 359.255
+    },
+    "verify_ac2_consent (sender_bound)": {
+      "n": 10000,
+      "ops_per_s": 4387.0,
+      "mean_us": 227.3,
+      "p50_us": 219.491,
+      "p95_us": 287.971,
+      "p99_us": 342.172
+    },
+    "compose_ac2_chain": {
+      "n": 10000,
+      "ops_per_s": 3777.5,
+      "mean_us": 264.095,
+      "p50_us": 253.476,
+      "p95_us": 344.577,
+      "p99_us": 408.627
+    },
+    "ac2_attestation": {
+      "n": 10000,
+      "ops_per_s": 4600.1,
+      "mean_us": 216.842,
+      "p50_us": 205.266,
+      "p95_us": 266.981,
+      "p99_us": 351.309
+    },
+    "verify_ac2_attestation": {
+      "n": 10000,
+      "ops_per_s": 4200.0,
+      "mean_us": 237.464,
+      "p50_us": 225.434,
+      "p95_us": 340.72,
+      "p99_us": 378.429
+    },
+    "verify_ac2_attestation (sender_bound)": {
+      "n": 10000,
+      "ops_per_s": 4322.5,
+      "mean_us": 230.738,
+      "p50_us": 223.499,
+      "p95_us": 301.096,
+      "p99_us": 372.68
+    },
+    "compose_journey (rails+pef+vcs+ac2)": {
+      "n": 3000,
+      "ops_per_s": 1606.4,
+      "mean_us": 621.774,
+      "p50_us": 591.612,
+      "p95_us": 922.532,
+      "p99_us": 1085.579
+    },
+    "verify_journey (rails+pef+vcs+ac2)": {
+      "n": 3000,
+      "ops_per_s": 1773.6,
+      "mean_us": 563.031,
+      "p50_us": 537.619,
+      "p95_us": 785.213,
+      "p99_us": 952.328
+    },
+    "verify_journey (sender_bound ac2)": {
+      "n": 3000,
+      "ops_per_s": 1710.6,
+      "mean_us": 583.763,
+      "p50_us": 560.633,
+      "p95_us": 764.525,
+      "p99_us": 957.758
+    }
+  },
+  "parallel_peak": {
+    "verify_journey (full)": {
+      "workers": 2,
+      "total_ops": 4000,
+      "wall_s": 1.406,
+      "aggregate_ops_per_s": 2845.7,
+      "single_thread_ops_per_s": 1773.6,
+      "speedup_vs_single": 1.6
+    },
+    "verify_ac2_consent": {
+      "workers": 2,
+      "total_ops": 4000,
+      "wall_s": 0.535,
+      "aggregate_ops_per_s": 7473.1,
+      "single_thread_ops_per_s": 4479.1,
+      "speedup_vs_single": 1.67
+    }
+  }
+}
