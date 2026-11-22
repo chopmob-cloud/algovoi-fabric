@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="545" viewBox="0 0 1140 545" font-family="-apple-system, 'Segoe UI', Inter, Helvetica, Arial, sans-serif"><rect width="1140" height="545" fill="#ffffff"/><defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#94a3b8"/></marker></defs><text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">AI protection — the av-agent governance level</text><text x="40" y="66" font-size="13" fill="#64748b">Fabric composes keystone-agent: an agent&#x27;s action is governed before it is bound.</text><rect x="60" y="140" width="250" height="120" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+<text x="185.0" y="166" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">agent action (event)</text>
+<text x="185.0" y="188" font-size="12" fill="#475569" text-anchor="middle">charge amount=50</text>
+<text x="185.0" y="205" font-size="12" fill="#475569" text-anchor="middle">stage: execution</text>
+<rect x="400" y="130" width="290" height="140" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+<text x="545.0" y="156" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">keystone-agent Engine</text>
+<text x="545.0" y="178" font-size="12" fill="#475569" text-anchor="middle">policy: cap_charges&lt;=100</text>
+<text x="545.0" y="195" font-size="12" fill="#475569" text-anchor="middle">ALLOW / FLAG / BLOCK</text>
+<text x="545.0" y="212" font-size="12" fill="#475569" text-anchor="middle">BLOCK -&gt; Denied, fail-closed</text>
+<rect x="780" y="130" width="300" height="140" rx="10" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+<text x="930.0" y="156" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">behaviour_ref</text>
+<text x="930.0" y="178" font-size="12" fill="#475569" text-anchor="middle">sha256 over RFC 8785 JCS</text>
+<text x="930.0" y="195" font-size="12" fill="#475569" text-anchor="middle">bound to execution_ref</text>
+<text x="930.0" y="212" font-size="12" fill="#475569" text-anchor="middle">tamper-evident record</text>
+<line x1="310" y1="200" x2="400" y2="200" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="321.6" y="190.0" width="66.8" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="355.0" y="203.0" font-size="11" fill="#64748b" text-anchor="middle">dispatch</text>
+<line x1="690" y1="200" x2="780" y2="200" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="711.5" y="190.0" width="47.0" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="735.0" y="203.0" font-size="11" fill="#64748b" text-anchor="middle">fires</text>
+<rect x="400" y="340" width="290" height="110" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+<text x="545.0" y="366" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">av-agent journey level</text>
+<text x="545.0" y="388" font-size="12" fill="#475569" text-anchor="middle">binding_ref recomputes offline</text>
+<text x="545.0" y="405" font-size="12" fill="#475569" text-anchor="middle">no BLOCK ever committed</text>
+<line x1="930" y1="270" x2="690" y2="380" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="786.5" y="315.0" width="47.0" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="810.0" y="328.0" font-size="11" fill="#64748b" text-anchor="middle">binds</text>
+<text x="60" y="372" font-size="13" font-weight="600" fill="#e11d48">over-cap, inert policy,</text>
+<text x="60" y="394" font-size="13" font-weight="600" fill="#e11d48">tampered record or forged</text>
+<text x="60" y="416" font-size="13" font-weight="600" fill="#e11d48">ALLOW -&gt; FabricError</text>
+<text x="40" y="492" font-size="14" font-weight="600" fill="#16a34a">Re-execution re-runs the policy: a self-consistent forgery is still caught.</text>
+<text x="40" y="525" font-size="11" font-weight="400" fill="#94a3b8">agent.py · composes algovoi-keystone-agent 0.5.0 · proven G01-G13 both directions</text></svg>

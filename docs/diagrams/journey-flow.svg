@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="525" viewBox="0 0 1140 525" font-family="-apple-system, 'Segoe UI', Inter, Helvetica, Arial, sans-serif"><rect width="1140" height="525" fill="#ffffff"/><defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#94a3b8"/></marker></defs><text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">The full journey, started and finished</text><text x="40" y="66" font-size="13" fill="#64748b">AV-RAILS -&gt; AV-PEF -&gt; AV-VCS, with AC2 consent — one offline-verifiable envelope.</text><rect x="60" y="140" width="250" height="150" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="185.0" y="166" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">AV-RAILS chain</text>
+<text x="185.0" y="188" font-size="12" fill="#475569" text-anchor="middle">passport -&gt; mandate</text>
+<text x="185.0" y="205" font-size="12" fill="#475569" text-anchor="middle">-&gt; decision -&gt; execution</text>
+<text x="185.0" y="222" font-size="12" fill="#475569" text-anchor="middle">-&gt; trust_query</text>
+<text x="185.0" y="239" font-size="12" fill="#475569" text-anchor="middle">verify_chain offline</text>
+<rect x="400" y="170" width="200" height="90" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+<text x="500.0" y="196" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">execution_ref</text>
+<text x="500.0" y="218" font-size="12" fill="#475569" text-anchor="middle">the chain&#x27;s own anchor</text>
+<line x1="310" y1="215" x2="400" y2="215" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="324.9" y="205.0" width="60.199999999999996" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="355.0" y="218.0" font-size="11" fill="#64748b" text-anchor="middle">anchors</text>
+<text x="680" y="118" font-size="13" font-weight="600" fill="#e11d48">fail-closed: any tamper -&gt; FabricError</text>
+<rect x="680" y="130" width="400" height="75" rx="10" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+<text x="880.0" y="156" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">AV-PEF · verify_pef</text>
+<text x="880.0" y="178" font-size="12" fill="#475569" text-anchor="middle">execution.settlement_frame_id == frame.frame_id</text>
+<rect x="680" y="240" width="400" height="75" rx="10" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+<text x="880.0" y="266" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">AV-VCS · keystone_ref archive:bind</text>
+<text x="880.0" y="288" font-size="12" fill="#475569" text-anchor="middle">binding_ref recomputed from execution_ref</text>
+<rect x="680" y="350" width="400" height="75" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+<text x="880.0" y="376" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">AC2 · verify_consent</text>
+<text x="880.0" y="398" font-size="12" fill="#475569" text-anchor="middle">verified before binding; level never upgraded</text>
+<line x1="600" y1="215" x2="680" y2="167" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="606.6" y="181.0" width="66.8" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="640.0" y="194.0" font-size="11" fill="#64748b" text-anchor="middle">re-binds</text>
+<line x1="600" y1="215" x2="680" y2="277" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="600.0" y="236.0" width="80.0" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="640.0" y="249.0" font-size="11" fill="#64748b" text-anchor="middle">recomputes</text>
+<line x1="600" y1="215" x2="680" y2="387" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="596.7" y="291.0" width="86.6" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="640.0" y="304.0" font-size="11" fill="#64748b" text-anchor="middle">re-verifies</text>
+<text x="40" y="470" font-size="14" font-weight="600" fill="#16a34a">verify_journey recomputes every level offline; a valid journey returns ok=True.</text>
+<text x="40" y="503" font-size="11" font-weight="400" fill="#94a3b8">Proven both directions: spine_proof.py J01-J09, A11-A16 · 12 journey + 28 AC2 tests.</text></svg>

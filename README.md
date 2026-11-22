@@ -36,16 +36,16 @@ AV-VCS's Compliance Command Center with no vendor in the loop.
 
 ## Design maps
 
-Hand-drawn maps of the composition (editable `.excalidraw` sources beside each
-PNG in [`docs/diagrams/`](docs/diagrams/)):
+Architecture maps of the composition (editable SVG sources beside each PNG in
+[`docs/diagrams/`](docs/diagrams/)):
 
-![How Keystone sits inside Fabric](docs/diagrams/fabric-spine.png)
+![How Keystone sits inside Fabric](docs/diagrams/fabric-spine.svg)
 
-![The full journey](docs/diagrams/journey-flow.png)
+![The full journey](docs/diagrams/journey-flow.svg)
 
-![Trust boundary, Rule K](docs/diagrams/trust-boundary.png)
+![Trust boundary, Rule K](docs/diagrams/trust-boundary.svg)
 
-![AI protection, the av-agent level](docs/diagrams/av-agent.png)
+![AI protection, the av-agent level](docs/diagrams/av-agent.svg)
 
 ## Protocol conformance: x402 / AP2 / MPP / A2A
 

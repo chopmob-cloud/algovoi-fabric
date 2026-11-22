@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="525" viewBox="0 0 1140 525" font-family="-apple-system, 'Segoe UI', Inter, Helvetica, Arial, sans-serif"><rect width="1140" height="525" fill="#ffffff"/><defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#94a3b8"/></marker></defs><text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Trust boundary — Rule K</text><text x="40" y="66" font-size="13" fill="#64748b">Every estate refusal is translated. Nothing leaks past except FabricError.</text><rect x="60" y="130" width="270" height="160" rx="10" fill="#fff1f2" stroke="#e11d48" stroke-width="1.5"/>
+<text x="195.0" y="156" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">hostile / invalid input</text>
+<text x="195.0" y="178" font-size="12" fill="#475569" text-anchor="middle">forward @ref · duplicate name</text>
+<text x="195.0" y="195" font-size="12" fill="#475569" text-anchor="middle">tampered hash · non-dict</text>
+<text x="195.0" y="212" font-size="12" fill="#475569" text-anchor="middle">empty chain · MeshError</text>
+<rect x="420" y="120" width="300" height="180" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+<text x="570.0" y="146" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">Fabric boundary — Rule K</text>
+<text x="570.0" y="168" font-size="12" fill="#475569" text-anchor="middle">KeystoneError -&gt; FabricError</text>
+<text x="570.0" y="185" font-size="12" fill="#475569" text-anchor="middle">MeshError -&gt; FabricError</text>
+<text x="570.0" y="202" font-size="12" fill="#475569" text-anchor="middle">TypeError -&gt; FabricError</text>
+<text x="570.0" y="219" font-size="12" fill="#475569" text-anchor="middle">KeyError -&gt; FabricError</text>
+<rect x="820" y="130" width="280" height="160" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+<text x="960.0" y="156" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">FabricError (ValueError)</text>
+<text x="960.0" y="178" font-size="12" fill="#475569" text-anchor="middle">the ONE exception</text>
+<text x="960.0" y="195" font-size="12" fill="#475569" text-anchor="middle">callers catch</text>
+<text x="960.0" y="212" font-size="12" fill="#475569" text-anchor="middle">ProtocolError is a FabricError</text>
+<line x1="330" y1="210" x2="420" y2="210" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="344.9" y="200.0" width="60.199999999999996" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="375.0" y="213.0" font-size="11" fill="#64748b" text-anchor="middle">refused</text>
+<line x1="720" y1="210" x2="820" y2="210" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="730.0" y="200.0" width="80.0" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="770.0" y="213.0" font-size="11" fill="#64748b" text-anchor="middle">translated</text>
+<rect x="60" y="350" width="1040" height="120" rx="12" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,5"/><text x="76" y="372" font-size="12" fill="#64748b">Protocol front-door — fail-closed version gate</text>
+<rect x="90" y="392" width="270" height="62" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+<text x="225.0" y="418" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">unknown protocol / version</text>
+<text x="225.0" y="440" font-size="12" fill="#475569" text-anchor="middle">x402 · ap2 · mpp · a2a</text>
+<rect x="440" y="392" width="200" height="62" rx="10" fill="#fff1f2" stroke="#e11d48" stroke-width="1.5"/>
+<text x="540.0" y="418" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">check_version</text>
+<text x="540.0" y="440" font-size="12" fill="#475569" text-anchor="middle">raises ProtocolError</text>
+<rect x="720" y="392" width="290" height="62" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+<text x="865.0" y="418" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">caught by except FabricError</text>
+<text x="865.0" y="440" font-size="12" fill="#475569" text-anchor="middle">new version needs a proof</text>
+<line x1="360" y1="423" x2="440" y2="423" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="640" y1="423" x2="720" y2="423" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="40" y="500" font-size="13" font-weight="600" fill="#e11d48">Caller contract: catch FabricError, not KeystoneError (proven both directions: C09).</text></svg>
