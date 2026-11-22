@@ -57,7 +57,7 @@ else rather than silently accepting a shape it cannot verify:
 | Face | Proven versions | Provenance |
 |---|---|---|
 | x402 | `1`, `2` | estate `x402_adapter.py` (v1 `x-payment`, v2 `PAYMENT-SIGNATURE`) |
-| AP2 | `0.1` | SD-JWT+kb IntentMandate / CartMandate |
+| AP2 | `0.1`, `0.2` | 0.1 SD-JWT+kb IntentMandate / CartMandate (estate-proven); 0.2 spine conformance — label bind/verify/journey |
 | MPP | `2` | IETF draft payment auth (version 2) |
 | A2A | `0.3`, `1.0.1` | 0.3 pack-proven; 1.0.1 graph-EVIDENCED |
 
@@ -70,8 +70,8 @@ protocol or an unproven version raises `ProtocolError` before any link is
 emitted, and the caller cannot override the structural binding to the face.
 
 > "All versions" made honest: Fabric pins the versions it has proven and rejects
-> the rest. Adding a newly-proven version is a deliberate one-line registry
-> change, re-gated by the same conformance suite.
+> the rest. Adding a newly-proven version is a deliberate registry change,
+> re-gated by the same conformance suite across both editions.
 
 ## Why security is the spine
 
