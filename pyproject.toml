@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algovoi-fabric"
-version = "0.1.0"
-description = "AlgoVoi Fabric: the highest-assurance security composition core for agentic commerce. Tamper-evident, fail-closed, offline-verifiable keystone chains binding PEF evidence."
+version = "0.2.0"
+description = "AlgoVoi Fabric: the highest-assurance security composition core for agentic commerce. Tamper-evident, fail-closed, offline-verifiable journeys spanning AV-RAILS decisions, AV-PEF evidence and AV-VCS sealed-archive bindings."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
@@ -14,6 +14,7 @@ dependencies = [
     "algovoi-keystone",
     "algovoi-pef>=0.1.2",
     "algovoi-substrate>=0.5.1",
+    "algovoi-keystone-connect>=0.5.0",
     "rfc8785>=0.1.4",
 ]
 

@@ -2,18 +2,37 @@
 
 **The security composition core for agentic commerce.** Fabric turns an agent's
 payment action into a single, tamper-evident, fail-closed, **offline-verifiable**
-keystone chain that binds authority, policy, decision, execution and settlement
-evidence into one recomputable sequence.
+artefact that spans the whole journey: **AV-RAILS** authority and decision,
+**AV-PEF** settlement evidence, and **AV-VCS** sealed-archive binding. The
+journey can be started and finished as one recomputable sequence.
 
 The defining guarantee: **every protection is recomputable offline by the
 customer: nothing is trusted on AlgoVoi's word.** A plain receipt checker
-recomputes one digest; Fabric proves the *whole chain binds in order* and that
-one verdict covers it.
+recomputes one digest; Fabric proves the *whole chain binds in order*, that one
+verdict covers it, and that the finished journey is tied to the sealed archive
+entry.
 
-> The security composition core is built and proven (see *Proof* below).
-> The wider protection tiers (post-quantum signing, RFC 3161 time, KMS/HSM
-> custody) compose existing AlgoVoi primitives and are being wired in. Fabric is
-> a composition layer, not a new protocol.
+> The full-journey composition core is built and proven (see *Proof* below).
+> Fabric is a composition layer, not a new protocol: it delegates every
+> reference to a published AlgoVoi primitive. The post-quantum sealing and
+> timestamping of the archive entry are performed by the customer's licensed
+> AV-VCS engine; Fabric binds the journey to that entry and never imports the
+> engine.
+
+## The full journey: AV-RAILS -> AV-PEF -> AV-VCS
+
+| Level | Role in the journey | Primitive Fabric delegates to |
+|---|---|---|
+| AV-RAILS | passport, mandate, policy, decision, execution: the authority chain | `algovoi-keystone` `verify_chain` |
+| AV-PEF | the settlement evidence frame bound to the execution | `algovoi-pef` `verify_pef` |
+| AV-VCS | the sealed-archive storage binding that finishes the journey | `algovoi-keystone-connect` `keystone_ref` (`archive:bind`) |
+
+`compose_journey` emits one envelope holding the AV-RAILS chain, the AV-PEF
+frame and the AV-VCS binding. `verify_journey` recomputes all three offline and
+checks that each downstream level anchors to the chain's own execution link.
+The AV-VCS `binding_ref` uses the exact `archive:bind` preimage of the public
+`algovoi-keystone-archive` bridge, so a binding Fabric emits is accepted by
+AV-VCS's Compliance Command Center with no vendor in the loop.
 
 ## Why security is the spine
 
@@ -30,31 +49,41 @@ base and no network contact.
 | Authority | no permission widening | keystone `scope_subset`, fail-closed |
 | Policy | deny-by-default verdicts | compliance gate (ALLOW / REFER / DENY) |
 | Integrity | tamper any link → chain breaks | `sha256(JCS)` content addressing |
-| Time & revocation | post-revocation actions blocked | `not_revoked` cascade, RFC 3161 |
+| Time & revocation | post-revocation actions blocked | `not_revoked` cascade |
 | Evidence | settlement bound to the decision | PEF frame (`draft-hopley-x402-payment-evidence-frame`) |
+| Archive binding | journey tied to the sealed entry | AV-VCS `archive:bind` via `keystone_ref` |
 | Assurance | recomputable offline by the customer | independent `rfc8785` canonicalisation |
 
-Post-quantum signing (Falcon-1024 / ML-DSA-65 / ML-KEM-1024), RFC 9421
-authentication and BYO-key/KMS/HSM custody compose the estate's existing,
-independently validated primitives in the tiers above the core.
+The post-quantum protections (Falcon-1024 signing, ML-KEM-1024 authenticated
+encryption, RFC 3161 timestamping) and BYO-key/KMS/HSM custody belong to the
+AV-VCS engine and the estate's higher tiers. Fabric binds the journey to the
+sealed entry those protections produce; it does not perform them in the core.
 
 ## Proof
 
 The core is proven against the **published** packages (`algovoi-keystone` 0.6.0,
-`algovoi-pef` 0.1.2, `algovoi-substrate` 0.5.1), not a private fork:
+`algovoi-pef` 0.1.2, `algovoi-substrate` 0.5.1, `algovoi-keystone-connect` 0.5.0),
+not a private fork:
 
-- **12 security tests, both directions**: each protection passes green on valid
-  input and goes red on a planted defect.
+- **24 security tests, both directions**: 12 for the chain core and 12 for the
+  full journey. Each protection passes green on valid input and goes red on a
+  planted defect.
 - **Byte-exact contract**: the composer reproduces the published
-  `keystone-golden.json` references exactly, so the emitted chain is accepted by
-  the real `verify_chain` by construction.
-- **Mutation self-test**: planting a fail-open in the composer (dropping ref
-  anchoring) turns 3 tests red; restoring returns 12 green, bytes identical.
+  `keystone-golden.json` references exactly, and the AV-VCS `binding_ref` is
+  byte-identical to the canonical `keystone_ref` `archive:bind` preimage used by
+  the public bridge.
+- **Mutation self-test**: dropping the composer's ref anchoring turns 3 core
+  tests red; dropping the journey's archive-binding recompute turns 3 journey
+  tests red; trusting the envelope's claimed execution reference instead of the
+  chain's verified one turns 1 journey test red. Restoring returns 24 green,
+  bytes identical.
 
 Proven properties: tamper-evidence; fail-closed on forward/unknown references,
 duplicate names and empty chains; scope-widening rejected; revocation cascade
 blocks actions after revocation; a PEF settlement frame binds and verifies
-offline.
+offline; the full journey spans AV-RAILS, AV-PEF and AV-VCS and verifies offline;
+a tampered archive `doc_hash`, `entry_id` or `seq`, a substituted execution
+reference, and an unbound PEF frame are all fail-closed.
 
 ## Quickstart
 
@@ -79,6 +108,25 @@ assert result.ok and result.capped
 `@name` binds an earlier link by its computed reference; `@@name` is a literal
 escape. A forward or unknown reference raises `KeystoneError` (fail-closed).
 
+The full journey adds the AV-PEF frame and the AV-VCS archive binding:
+
+```python
+from algovoi_fabric import compose_journey, verify_journey
+from algovoi_pef import build_pef
+
+frame = build_pef(claim_type="payment_settlement", receipt={...},
+                  frame_provider_did="did:web:...", frame_timestamp_ms=...)
+# the execution link must bind frame["frame_id"] via settlement_frame_id
+journey = compose_journey(chain, execution="execution", pef_frame=frame,
+                          archive={"doc_hash": "sha256:...",   # sealed entry content address
+                                   "entry_id": "entry-0001", "seq": 7})
+assert journey["levels"] == ["av-rails", "av-pef", "av-vcs"]
+assert verify_journey(journey)["ok"]   # offline; all three levels recomputed
+```
+
+`archive` is the attestation from the customer's sealed AV-VCS engine; Fabric
+emits the content-addressed `binding_ref` and never performs the sealing itself.
+
 ## Links
 
 - Verifier: [algovoi-keystone](https://github.com/chopmob-cloud/algovoi-keystone)
@@ -88,4 +136,4 @@ escape. A forward or unknown reference raises `KeystoneError` (fail-closed).
 
 ## Licence
 
-Apache-2.0. Canonicalisation follows RFC 8785 (JCS); attribution per NOTICE.
+Apache-2.0. Canonicalisation follows RFC 8785 (JCS).
