@@ -1,0 +1,754 @@
+{
+  "producer": "algovoi-fabric Python (real keystone verifier)",
+  "canon": "jcs-rfc8785-v1",
+  "jcs_vectors": [
+    {
+      "id": "jcs_00",
+      "preimage": {},
+      "jcs_hex": "7b7d",
+      "ref": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "id": "jcs_01",
+      "preimage": {
+        "b": 2,
+        "a": 1
+      },
+      "jcs_hex": "7b2261223a312c2262223a327d",
+      "ref": "sha256:43258cff783fe7036d8a43033f830adfc60ec037382473548ac742b888292777"
+    },
+    {
+      "id": "jcs_02",
+      "preimage": {
+        "z": [
+          3,
+          1,
+          2
+        ],
+        "a": {
+          "y": true,
+          "x": null
+        }
+      },
+      "jcs_hex": "7b2261223a7b2278223a6e756c6c2c2279223a747275657d2c227a223a5b332c312c325d7d",
+      "ref": "sha256:b34ddc7cc6dc5c7cc19db4e3526c205b9b295fa8787094d1eff680e929a5504e"
+    },
+    {
+      "id": "jcs_03",
+      "preimage": {
+        "amount_minor": 500,
+        "currency": "USD"
+      },
+      "jcs_hex": "7b22616d6f756e745f6d696e6f72223a3530302c2263757272656e6379223a22555344227d",
+      "ref": "sha256:64d8ced755d642ffe5aff8d0507c4baeeb239b71041b9fb862d553f10206c27c"
+    },
+    {
+      "id": "jcs_04",
+      "preimage": {
+        "amount_minor": 500.0
+      },
+      "jcs_hex": "7b22616d6f756e745f6d696e6f72223a3530307d",
+      "ref": "sha256:d1ce19b2374ca5627e0a309e053d7b9c9ec1643fc81b721314c536409a6f69fa"
+    },
+    {
+      "id": "jcs_05",
+      "preimage": {
+        "n": 9007199254740991
+      },
+      "jcs_hex": "7b226e223a393030373139393235343734303939317d",
+      "ref": "sha256:e1da48c6a6089f06ecb4e0a2259e658e3786b2420f52baccdf929ec6460d7b41"
+    },
+    {
+      "id": "jcs_06",
+      "preimage": {
+        "unicode": "café — 日本語 — 😀",
+        "s": "a/b\\c\"d"
+      },
+      "jcs_hex": "7b2273223a22612f625c5c635c2264222c22756e69636f6465223a22636166c3a920e2809420e697a5e69cace8aa9e20e2809420f09f9880227d",
+      "ref": "sha256:15da10ab55df950c9e80accff4598685f90391458ac40531d340b247e60ea298"
+    },
+    {
+      "id": "jcs_07",
+      "preimage": {
+        "nested": {
+          "deep": {
+            "list": [
+              {
+                "k": "v"
+              },
+              1,
+              2.5,
+              false
+            ]
+          }
+        }
+      },
+      "jcs_hex": "7b226e6573746564223a7b2264656570223a7b226c697374223a5b7b226b223a2276227d2c312c322e352c66616c73655d7d7d7d",
+      "ref": "sha256:d01926dbb7b228271230e57af0d99ad428d281e790a87cec8c86c9c0fb4fb0ef"
+    },
+    {
+      "id": "jcs_08",
+      "preimage": {
+        "esc": "@@literal",
+        "ref": "@earlier"
+      },
+      "jcs_hex": "7b22657363223a2240406c69746572616c222c22726566223a22406561726c696572227d",
+      "ref": "sha256:f735f9b362422e4e221564043f2bbe1832f7550ab49826dc5be304a6c5d8948a"
+    },
+    {
+      "id": "jcs_09",
+      "preimage": [
+        1,
+        "two",
+        {
+          "three": 3
+        },
+        null,
+        true
+      ],
+      "jcs_hex": "5b312c2274776f222c7b227468726565223a337d2c6e756c6c2c747275655d",
+      "ref": "sha256:7f9c8e0d4eb183ae8412ec733477cd2db4166ac185528a4c0fe2bb6e301f0bc0"
+    },
+    {
+      "id": "jcs_10",
+      "preimage": {
+        "neg": -42,
+        "frac": 3.14159,
+        "exp": 1e+20
+      },
+      "jcs_hex": "7b22657870223a3130303030303030303030303030303030303030302c2266726163223a332e31343135392c226e6567223a2d34327d",
+      "ref": "sha256:d55d0aaed0c0c571242d5106c49d290021176fc8f932ca1a9f0bde73eb428cab"
+    }
+  ],
+  "chains": [
+    {
+      "id": "chain_basic",
+      "links": [
+        [
+          "passport",
+          {
+            "action_type": "passport",
+            "agent": "agent:a",
+            "scope": {
+              "max_amount": 1000,
+              "resource": "/pay"
+            }
+          }
+        ],
+        [
+          "mandate",
+          {
+            "action_type": "mandate",
+            "passport_ref": "@passport",
+            "scope": {
+              "max_amount": 500,
+              "resource": "/pay/tx"
+            }
+          }
+        ],
+        [
+          "execution",
+          {
+            "action_type": "execute",
+            "mandate_ref": "@mandate",
+            "amount_minor": 500,
+            "executed_at_ms": 1700000000000
+          }
+        ]
+      ],
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "passport",
+            "preimage": {
+              "action_type": "passport",
+              "agent": "agent:a",
+              "scope": {
+                "max_amount": 1000,
+                "resource": "/pay"
+              }
+            },
+            "ref": "sha256:7df8a7de101749a50de9512e0231ebad12089442ce7693db7d13db9d6947e551"
+          },
+          {
+            "name": "mandate",
+            "preimage": {
+              "action_type": "mandate",
+              "passport_ref": "@passport",
+              "scope": {
+                "max_amount": 500,
+                "resource": "/pay/tx"
+              }
+            },
+            "ref": "sha256:ada965c3f50cf92faf5c19efa1ef081530b603ec1cddc30d75b3064516050371"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "mandate_ref": "@mandate",
+              "amount_minor": 500,
+              "executed_at_ms": 1700000000000
+            },
+            "ref": "sha256:ad4c5d91d719189baadc9f99204acb3fd863da8f52f14e0e28439561e8c29b4b"
+          }
+        ],
+        "description": "golden parity chain"
+      },
+      "verify_ok": true,
+      "refs": {
+        "passport": "sha256:7df8a7de101749a50de9512e0231ebad12089442ce7693db7d13db9d6947e551",
+        "mandate": "sha256:ada965c3f50cf92faf5c19efa1ef081530b603ec1cddc30d75b3064516050371",
+        "execution": "sha256:ad4c5d91d719189baadc9f99204acb3fd863da8f52f14e0e28439561e8c29b4b"
+      }
+    },
+    {
+      "id": "protocol_x402_v2",
+      "protocol": "x402",
+      "version": "2",
+      "message": {
+        "amount": "500",
+        "currency": "USD",
+        "pay_to": "0xabc"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "x402",
+              "version": "2",
+              "message_ref": "sha256:9c736d6097ebc38f355ec7711bd22e917e7d61d02833718b41109255b4452d91"
+            },
+            "ref": "sha256:81dac8278b0e372b444ec9665561217255d3866854f5b6aaadb04208e65ef9bb"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol"
+            },
+            "ref": "sha256:a8e48812d3bf8d2db1e18ce24995d62db3aefccdaf5fbb172854c1faf91082ed"
+          }
+        ],
+        "description": "x402 v2 journey"
+      },
+      "verify_ok": true
+    }
+  ],
+  "protocol_cases": [
+    {
+      "id": "proto_x402_1",
+      "protocol": "x402",
+      "version": "1",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "x402",
+        "version": "1",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "x402",
+              "version": "1",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:41a4b838bb5b9172a475fba5a7d68f58ea8a8fe56e278e1d0ffc634b098c4f7c"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:9cee1051fb839d3b2682cedffb4520ec0d84d3a0aace4c4f1f732dbf02964a1f"
+          }
+        ],
+        "description": "x402 v1 journey"
+      },
+      "verify_ok": true
+    },
+    {
+      "id": "proto_x402_2",
+      "protocol": "x402",
+      "version": "2",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "x402",
+        "version": "2",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "x402",
+              "version": "2",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:8ddcc31e877f81bf71488858e1aaff905ec7e47321e0c1e16198f46565c53bdf"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:55dc1eee712d06edc56469e83d729cb83134e463491c545d44f07550ebcf8667"
+          }
+        ],
+        "description": "x402 v2 journey"
+      },
+      "verify_ok": true
+    },
+    {
+      "id": "proto_ap2_0.1",
+      "protocol": "ap2",
+      "version": "0.1",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "ap2",
+        "version": "0.1",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "ap2",
+              "version": "0.1",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:69f33c449e1d9f22b236d7cbbfc195776d4975e136a20605ab0ee6eb9a8c6e7f"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:e788a673218757f30dad69d48bec70c95d0130e2036c774a840aace13f7c229b"
+          }
+        ],
+        "description": "ap2 v0.1 journey"
+      },
+      "verify_ok": true
+    },
+    {
+      "id": "proto_mpp_2",
+      "protocol": "mpp",
+      "version": "2",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "mpp",
+        "version": "2",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "mpp",
+              "version": "2",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:4d949e311a4ea0fd70b6b1568e3cf10a6e50c983ef3f0afd8cee84135dd35f6c"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:f3e72ca133cd7f7d5e98a2ced542c0c872c51bc2aab35a710292cd0b2f943fd4"
+          }
+        ],
+        "description": "mpp v2 journey"
+      },
+      "verify_ok": true
+    },
+    {
+      "id": "proto_a2a_0.3",
+      "protocol": "a2a",
+      "version": "0.3",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "a2a",
+        "version": "0.3",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "a2a",
+              "version": "0.3",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:a6d012309c6366085ab176aa64bc3c52b0cfb3509de4b3ca33ccffcefc4afc80"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:25febbc6e6d594eb107b2c322f75b567419ca89d9dbb8c8460862c6b67ae2d55"
+          }
+        ],
+        "description": "a2a v0.3 journey"
+      },
+      "verify_ok": true
+    },
+    {
+      "id": "proto_a2a_1.0.1",
+      "protocol": "a2a",
+      "version": "1.0.1",
+      "message": {
+        "amount": "500",
+        "currency": "USD"
+      },
+      "face": {
+        "action_type": "protocol:face",
+        "protocol": "a2a",
+        "version": "1.0.1",
+        "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+      },
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "protocol",
+            "preimage": {
+              "action_type": "protocol:face",
+              "protocol": "a2a",
+              "version": "1.0.1",
+              "message_ref": "sha256:a63c42ae1c8a0f460540d6480fe774b9858749cc7c23778e2a54eedadc34fa0a"
+            },
+            "ref": "sha256:bfea51b9acb27c06d1e0cfa0a275c46a656d33f570891c32367dd7d897ce4ff8"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "protocol_ref": "@protocol",
+              "amount_minor": 500
+            },
+            "ref": "sha256:2a17bdea4bd45e9950aa62891b4ca89c24993f35d7c5ba9f46f13555594f2a7a"
+          }
+        ],
+        "description": "a2a v1.0.1 journey"
+      },
+      "verify_ok": true
+    }
+  ],
+  "protocol_errors": [
+    {
+      "protocol": "nope",
+      "version": "1",
+      "error": "unsupported protocol 'nope'"
+    },
+    {
+      "protocol": "x402",
+      "version": "9",
+      "error": "unsupported version '9' for protocol 'x402'; supported: ['1', '2']"
+    }
+  ],
+  "journey": {
+    "id": "journey_full",
+    "chain_links": [
+      [
+        "policy",
+        {
+          "action_type": "policy",
+          "max_amount": 1000
+        }
+      ],
+      [
+        "execution",
+        {
+          "action_type": "execute",
+          "settlement_frame_id": "sha256:58846e4f59b9bcb4aa8d87ff7090e6fda93c64980cdb6995a9b770d3d3f41f0c",
+          "amount_minor": 500,
+          "executed_at_ms": 1700000000000
+        }
+      ]
+    ],
+    "pef_frame": {
+      "canon_version": "urn:x402:canonicalisation:jcs-rfc8785-v1",
+      "claim_type": "payment_settlement",
+      "frame_provider_did": "did:algovoi:provider",
+      "frame_timestamp_ms": 1700000000000,
+      "pef_version": "1",
+      "receipt": {
+        "amount_minor": 500,
+        "currency": "USD",
+        "pay_to": "0xabc"
+      },
+      "receipt_format": "settlement-attestation-v1",
+      "receipt_hash": "sha256:1a46274707d58ebf02edd4d8d518a78ce75664fc5544716a70694342a669a89b",
+      "frame_id": "sha256:58846e4f59b9bcb4aa8d87ff7090e6fda93c64980cdb6995a9b770d3d3f41f0c"
+    },
+    "archive": {
+      "doc_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "entry_id": "entry-1",
+      "seq": 7
+    },
+    "envelope": {
+      "schema": "algovoi-fabric-journey/v1",
+      "canon": "jcs-rfc8785-v1",
+      "levels": [
+        "av-rails",
+        "av-pef",
+        "av-vcs"
+      ],
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "policy",
+            "preimage": {
+              "action_type": "policy",
+              "max_amount": 1000
+            },
+            "ref": "sha256:b49311d017dfc3aef8c4cd06b573846a1ae2ff0107bc3ec67c99c8953680100e"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "settlement_frame_id": "sha256:58846e4f59b9bcb4aa8d87ff7090e6fda93c64980cdb6995a9b770d3d3f41f0c",
+              "amount_minor": 500,
+              "executed_at_ms": 1700000000000
+            },
+            "ref": "sha256:0e9c8a863b324d2d73cd252b8311802cc5cfa031b5f36daefc44a1fceb9bb043"
+          }
+        ],
+        "description": "golden journey chain"
+      },
+      "execution": "execution",
+      "execution_ref": "sha256:0e9c8a863b324d2d73cd252b8311802cc5cfa031b5f36daefc44a1fceb9bb043",
+      "pef_frame": {
+        "canon_version": "urn:x402:canonicalisation:jcs-rfc8785-v1",
+        "claim_type": "payment_settlement",
+        "frame_provider_did": "did:algovoi:provider",
+        "frame_timestamp_ms": 1700000000000,
+        "pef_version": "1",
+        "receipt": {
+          "amount_minor": 500,
+          "currency": "USD",
+          "pay_to": "0xabc"
+        },
+        "receipt_format": "settlement-attestation-v1",
+        "receipt_hash": "sha256:1a46274707d58ebf02edd4d8d518a78ce75664fc5544716a70694342a669a89b",
+        "frame_id": "sha256:58846e4f59b9bcb4aa8d87ff7090e6fda93c64980cdb6995a9b770d3d3f41f0c"
+      },
+      "archive": {
+        "doc_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "entry_id": "entry-1",
+        "seq": 7,
+        "binding_ref": "sha256:06839a120911e106f1926bc789feabe4580b2513a30d4a8355d5b95323afa4a1"
+      },
+      "description": "golden journey"
+    },
+    "verify": {
+      "ok": true,
+      "levels": [
+        "av-rails",
+        "av-pef",
+        "av-vcs"
+      ],
+      "execution_ref": "sha256:0e9c8a863b324d2d73cd252b8311802cc5cfa031b5f36daefc44a1fceb9bb043"
+    },
+    "binding_ref": "sha256:06839a120911e106f1926bc789feabe4580b2513a30d4a8355d5b95323afa4a1",
+    "execution_ref": "sha256:0e9c8a863b324d2d73cd252b8311802cc5cfa031b5f36daefc44a1fceb9bb043"
+  },
+  "journey_ref": {
+    "id": "journey_ref_execution",
+    "chain_links": [
+      [
+        "policy",
+        {
+          "action_type": "policy",
+          "max_amount": 1000
+        }
+      ],
+      [
+        "execution",
+        {
+          "action_type": "execute",
+          "policy_ref": "@policy",
+          "amount_minor": 500,
+          "executed_at_ms": 1700000000000
+        }
+      ]
+    ],
+    "archive": {
+      "doc_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "entry_id": "entry-ref-1",
+      "seq": 9
+    },
+    "envelope": {
+      "schema": "algovoi-fabric-journey/v1",
+      "canon": "jcs-rfc8785-v1",
+      "levels": [
+        "av-rails",
+        "av-vcs"
+      ],
+      "chain": {
+        "schema": "algovoi-keystone-chain/v1",
+        "canon": "jcs-rfc8785-v1",
+        "chain": [
+          {
+            "name": "policy",
+            "preimage": {
+              "action_type": "policy",
+              "max_amount": 1000
+            },
+            "ref": "sha256:b49311d017dfc3aef8c4cd06b573846a1ae2ff0107bc3ec67c99c8953680100e"
+          },
+          {
+            "name": "execution",
+            "preimage": {
+              "action_type": "execute",
+              "policy_ref": "@policy",
+              "amount_minor": 500,
+              "executed_at_ms": 1700000000000
+            },
+            "ref": "sha256:1a8f447a1af17989e8121779d79c5fec4d045c45f94e3018e343861d0b1e9d5e"
+          }
+        ],
+        "description": "golden journey @ref execution chain"
+      },
+      "execution": "execution",
+      "execution_ref": "sha256:1a8f447a1af17989e8121779d79c5fec4d045c45f94e3018e343861d0b1e9d5e",
+      "archive": {
+        "doc_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "entry_id": "entry-ref-1",
+        "seq": 9,
+        "binding_ref": "sha256:fb34055b1b69f34dc719f7ee57d31a07713c4f8d9ab270d43461b4db35fbd510"
+      },
+      "description": "golden journey @ref execution"
+    },
+    "verify": {
+      "ok": true,
+      "levels": [
+        "av-rails",
+        "av-vcs"
+      ],
+      "execution_ref": "sha256:1a8f447a1af17989e8121779d79c5fec4d045c45f94e3018e343861d0b1e9d5e"
+    },
+    "binding_ref": "sha256:fb34055b1b69f34dc719f7ee57d31a07713c4f8d9ab270d43461b4db35fbd510",
+    "execution_ref": "sha256:1a8f447a1af17989e8121779d79c5fec4d045c45f94e3018e343861d0b1e9d5e",
+    "exec_stored_ref": "sha256:1a8f447a1af17989e8121779d79c5fec4d045c45f94e3018e343861d0b1e9d5e",
+    "exec_raw_preimage": {
+      "action_type": "execute",
+      "policy_ref": "@policy",
+      "amount_minor": 500,
+      "executed_at_ms": 1700000000000
+    }
+  },
+  "resolve": [
+    {
+      "id": "resolve_ok",
+      "refs": {
+        "x": "sha256:abababababababababababababababababababababababababababababababab"
+      },
+      "value": {
+        "a": "@x",
+        "b": "@@x",
+        "c": [
+          "@x",
+          1
+        ]
+      },
+      "resolved": {
+        "a": "sha256:abababababababababababababababababababababababababababababababab",
+        "b": "@x",
+        "c": [
+          "sha256:abababababababababababababababababababababababababababababababab",
+          1
+        ]
+      }
+    },
+    {
+      "id": "resolve_forward",
+      "value": {
+        "a": "@missing"
+      },
+      "refs": {},
+      "link_name": "self",
+      "error": "link 'self' references @missing, which is not an earlier link"
+    }
+  ],
+  "supported_matrix": {
+    "x402": [
+      "1",
+      "2"
+    ],
+    "ap2": [
+      "0.1"
+    ],
+    "mpp": [
+      "2"
+    ],
+    "a2a": [
+      "0.3",
+      "1.0.1"
+    ]
+  }
+}

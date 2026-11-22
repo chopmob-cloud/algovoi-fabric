@@ -2,6 +2,7 @@
 .venv-gate/
 build/
 dist/
+node_modules/
 *.egg-info/
 __pycache__/
 *.pyc

@@ -1,0 +1,26 @@
+{
+  "name": "@algovoi/fabric",
+  "version": "0.1.0",
+  "description": "AlgoVoi Fabric TypeScript core: tamper-evident, fail-closed, offline-verifiable keystone chains for agentic commerce. Byte-parity with the Python edition.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "parity": "vitest run test/parity.test.ts test/chain-parity.test.ts test/protocol-parity.test.ts test/journey-parity.test.ts"
+  },
+  "dependencies": {
+    "@algovoi/pef": "^0.1.2",
+    "@algovoi/substrate": "0.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
