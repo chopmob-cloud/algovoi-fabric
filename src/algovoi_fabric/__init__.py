@@ -9,8 +9,17 @@ posture themselves.
 """
 from .compose import compose_chain, verify, FabricError
 from .journey import compose_journey, verify_journey, archive_binding_ref
+from .protocols import (
+    ProtocolError,
+    supported_matrix,
+    check_version,
+    protocol_face,
+    compose_protocol_chain,
+)
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __all__ = ["compose_chain", "verify", "FabricError",
            "compose_journey", "verify_journey", "archive_binding_ref",
+           "ProtocolError", "supported_matrix", "check_version",
+           "protocol_face", "compose_protocol_chain",
            "__version__"]

@@ -34,6 +34,32 @@ The AV-VCS `binding_ref` uses the exact `archive:bind` preimage of the public
 `algovoi-keystone-archive` bridge, so a binding Fabric emits is accepted by
 AV-VCS's Compliance Command Center with no vendor in the loop.
 
+## Protocol conformance: x402 / AP2 / MPP / A2A
+
+Fabric gates every inbound message against a declared, fail-closed support
+matrix before it can enter a chain. The bundle covers the specific spec versions
+the estate has proven against the published packages — and refuses everything
+else rather than silently accepting a shape it cannot verify:
+
+| Face | Proven versions | Provenance |
+|---|---|---|
+| x402 | `1`, `2` | estate `x402_adapter.py` (v1 `x-payment`, v2 `PAYMENT-SIGNATURE`) |
+| AP2 | `0.1` | SD-JWT+kb IntentMandate / CartMandate |
+| MPP | `2` | IETF draft payment auth (version 2) |
+| A2A | `0.3`, `1.0.1` | 0.3 pack-proven; 1.0.1 graph-EVIDENCED |
+
+`compose_protocol_chain(protocol, version, message)` gates the version,
+content-addresses the exact message bytes with `keystone_ref` (sha256 over RFC
+8785 JCS), and emits a `protocol` face plus an `execution` link bound to it via
+`@protocol` — a `compose_chain` output the real keystone verifier accepts and
+that `compose_journey` can carry through AV-RAILS → AV-PEF → AV-VCS. An unknown
+protocol or an unproven version raises `ProtocolError` before any link is
+emitted, and the caller cannot override the structural binding to the face.
+
+> "All versions" made honest: Fabric pins the versions it has proven and rejects
+> the rest. Adding a newly-proven version is a deliberate one-line registry
+> change, re-gated by the same conformance suite.
+
 ## Why security is the spine
 
 Companies adopting autonomous agents need assurance they can *verify themselves*,
@@ -65,9 +91,9 @@ The core is proven against the **published** packages (`algovoi-keystone` 0.6.0,
 `algovoi-pef` 0.1.2, `algovoi-substrate` 0.5.1, `algovoi-keystone-connect` 0.5.0),
 not a private fork:
 
-- **24 security tests, both directions**: 12 for the chain core and 12 for the
-  full journey. Each protection passes green on valid input and goes red on a
-  planted defect.
+- **61 tests — 57 passed, 4 skipped placeholders**: 12 chain core, 12 full
+  journey, 37 protocol conformance. Each protection passes green on valid input
+  and goes red on a planted defect.
 - **Byte-exact contract**: the composer reproduces the published
   `keystone-golden.json` references exactly, and the AV-VCS `binding_ref` is
   byte-identical to the canonical `keystone_ref` `archive:bind` preimage used by
@@ -77,13 +103,26 @@ not a private fork:
   tests red; trusting the envelope's claimed execution reference instead of the
   chain's verified one turns 1 journey test red. Restoring returns 24 green,
   bytes identical.
+- **Protocol gate mutation**: inverting the version-membership test turns 13
+  conformance tests red; restoring returns them green — proven both on the
+  source tree and on the *installed* wheel.
+- **Clean-room build (VM2)**: the wheel is built from the staged source,
+  installed into a fresh `python:3.12-slim` container with dependencies pulled
+  from PyPI, and the suite runs against the installed package — 57 passed,
+  4 skipped. The installed-wheel negative control goes red on the planted
+  mutant and green on restore.
+- **Independent review**: Mistral (gating) and Claude (second opinion) both
+  return CLEAN; the gating reviewer was first proven to BLOCK a planted
+  inverted-version-gate mutant. `bandit` reports no issues.
 
 Proven properties: tamper-evidence; fail-closed on forward/unknown references,
 duplicate names and empty chains; scope-widening rejected; revocation cascade
 blocks actions after revocation; a PEF settlement frame binds and verifies
 offline; the full journey spans AV-RAILS, AV-PEF and AV-VCS and verifies offline;
 a tampered archive `doc_hash`, `entry_id` or `seq`, a substituted execution
-reference, and an unbound PEF frame are all fail-closed.
+reference, and an unbound PEF frame are all fail-closed. An unsupported protocol
+or version is rejected before any link is emitted, and the protocol face binds
+the exact message bytes so tampering breaks offline verification.
 
 ## Quickstart
 
@@ -126,6 +165,20 @@ assert verify_journey(journey)["ok"]   # offline; all three levels recomputed
 
 `archive` is the attestation from the customer's sealed AV-VCS engine; Fabric
 emits the content-addressed `binding_ref` and never performs the sealing itself.
+
+The protocol front-door gates the version and binds the message into the journey:
+
+```python
+from algovoi_fabric import compose_protocol_chain, verify, supported_matrix
+
+supported_matrix()
+# {'a2a': ['0.3', '1.0.1'], 'ap2': ['0.1'], 'mpp': ['2'], 'x402': ['1', '2']}
+
+chain = compose_protocol_chain("x402", "2", {"amount": 250, "currency": "USD"})
+assert verify(chain).ok        # offline; the real keystone verifier recomputes it
+
+compose_protocol_chain("x402", "99", {})   # raises ProtocolError (fail-closed)
+```
 
 ## Links
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algovoi-fabric"
-version = "0.2.0"
+version = "0.3.0"
 description = "AlgoVoi Fabric: the highest-assurance security composition core for agentic commerce. Tamper-evident, fail-closed, offline-verifiable journeys spanning AV-RAILS decisions, AV-PEF evidence and AV-VCS sealed-archive bindings."
 readme = "README.md"
 requires-python = ">=3.10"
