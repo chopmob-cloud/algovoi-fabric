@@ -1,0 +1,15 @@
+# Build / gate artifacts (never tracked)
+.venv-gate/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# AI / working docs (docgate: only the .md the repo needs is tracked)
+.hermes/
+*.draft.md
+DRAFT*.md
