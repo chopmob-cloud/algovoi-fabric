@@ -1,0 +1,543 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "algovoi-fabric",
+  "elements": [
+    {
+      "type": "text",
+      "id": "L48",
+      "x": 60,
+      "y": 28,
+      "width": 354.20000000000005,
+      "height": 35.0,
+      "text": "Trust boundary \u2014 Rule K",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "Trust boundary \u2014 Rule K",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L49",
+      "x": 60,
+      "y": 70,
+      "width": 651.2,
+      "height": 20.0,
+      "text": "Every estate refusal is translated. Nothing leaks past except FabricError.",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#757575",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "Every estate refusal is translated. Nothing leaks past except FabricError.",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r50",
+      "x": 60,
+      "y": 130,
+      "width": 270,
+      "height": 160,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t51",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t51",
+      "x": 70,
+      "y": 140,
+      "width": 250,
+      "height": 80.0,
+      "text": "hostile / invalid input\nforward @ref \u00b7 duplicate name\ntampered hash \u00b7 non-dict\nempty chain \u00b7 MeshError",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r50",
+      "originalText": "hostile / invalid input\nforward @ref \u00b7 duplicate name\ntampered hash \u00b7 non-dict\nempty chain \u00b7 MeshError",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r52",
+      "x": 420,
+      "y": 120,
+      "width": 300,
+      "height": 180,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t53",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t53",
+      "x": 430,
+      "y": 130,
+      "width": 280,
+      "height": 100.0,
+      "text": "Fabric boundary \u2014 Rule K\nKeystoneError -> FabricError\nMeshError -> FabricError\nTypeError -> FabricError\nKeyError -> FabricError",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r52",
+      "originalText": "Fabric boundary \u2014 Rule K\nKeystoneError -> FabricError\nMeshError -> FabricError\nTypeError -> FabricError\nKeyError -> FabricError",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r54",
+      "x": 820,
+      "y": 130,
+      "width": 280,
+      "height": 160,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t55",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t55",
+      "x": 830,
+      "y": 140,
+      "width": 260,
+      "height": 80.0,
+      "text": "FabricError (ValueError)\nthe ONE exception\ncallers catch\nProtocolError is a FabricError",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r54",
+      "originalText": "FabricError (ValueError)\nthe ONE exception\ncallers catch\nProtocolError is a FabricError",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "a56",
+      "x": 330,
+      "y": 210,
+      "width": 90,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          90,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r50",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r52",
+        "fixedPoint": [
+          0,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "boundElements": [
+        {
+          "id": "at57",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "at57",
+      "x": 335.0,
+      "y": 200.0,
+      "width": 80,
+      "height": 20.0,
+      "text": "refused",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "a56",
+      "originalText": "refused",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "a58",
+      "x": 720,
+      "y": 210,
+      "width": 100,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          100,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r52",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r54",
+        "fixedPoint": [
+          0,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "boundElements": [
+        {
+          "id": "at59",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "at59",
+      "x": 730.0,
+      "y": 200.0,
+      "width": 80,
+      "height": 20.0,
+      "text": "translated",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "a58",
+      "originalText": "translated",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r60",
+      "x": 60,
+      "y": 350,
+      "width": 1040,
+      "height": 120,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "dashed"
+    },
+    {
+      "type": "text",
+      "id": "L61",
+      "x": 80,
+      "y": 358,
+      "width": 354.20000000000005,
+      "height": 17.5,
+      "text": "protocol front-door \u2014 fail-closed version gate",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "strokeColor": "#1971c2",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "protocol front-door \u2014 fail-closed version gate",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r62",
+      "x": 90,
+      "y": 392,
+      "width": 270,
+      "height": 62,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#e9ecef",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t63",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t63",
+      "x": 100,
+      "y": 402,
+      "width": 250,
+      "height": 40.0,
+      "text": "unknown protocol / version\nx402 \u00b7 ap2 \u00b7 mpp \u00b7 a2a",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r62",
+      "originalText": "unknown protocol / version\nx402 \u00b7 ap2 \u00b7 mpp \u00b7 a2a",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r64",
+      "x": 440,
+      "y": 392,
+      "width": 200,
+      "height": 62,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t65",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t65",
+      "x": 450,
+      "y": 402,
+      "width": 180,
+      "height": 40.0,
+      "text": "check_version\nraises ProtocolError",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r64",
+      "originalText": "check_version\nraises ProtocolError",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r66",
+      "x": 720,
+      "y": 392,
+      "width": 290,
+      "height": 62,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t67",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t67",
+      "x": 730,
+      "y": 402,
+      "width": 270,
+      "height": 40.0,
+      "text": "caught by except FabricError\nnew version needs a proof",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r66",
+      "originalText": "caught by except FabricError\nnew version needs a proof",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "a68",
+      "x": 360,
+      "y": 423,
+      "width": 80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r62",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r64",
+        "fixedPoint": [
+          0,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      }
+    },
+    {
+      "type": "arrow",
+      "id": "a69",
+      "x": 640,
+      "y": 423,
+      "width": 80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r64",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r66",
+        "fixedPoint": [
+          0,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      }
+    },
+    {
+      "type": "text",
+      "id": "L70",
+      "x": 60,
+      "y": 495,
+      "width": 739.2,
+      "height": 20.0,
+      "text": "Caller contract: catch FabricError, not KeystoneError (proven both directions: C09).",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#c92a2a",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "Caller contract: catch FabricError, not KeystoneError (proven both directions: C09).",
+      "autoResize": true
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

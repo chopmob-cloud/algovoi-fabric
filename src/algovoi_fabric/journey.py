@@ -28,6 +28,7 @@ from algovoi_keystone_connect import keystone_ref
 from algovoi_pef import verify_pef
 
 from .ac2 import ac2_attestation, verify_ac2_attestation
+from .agent import compose_agent_guard, verify_agent_guard
 from .compose import FabricError, verify
 
 JOURNEY_SCHEMA = "algovoi-fabric-journey/v1"
@@ -100,6 +101,9 @@ def compose_journey(chain: dict, *, execution: str = "execution",
                     archive: dict | None = None,
                     ac2_sealed: dict | None = None,
                     ac2_expected_sender: bytes | None = None,
+                    agent_event: Any = None,
+                    agent_behaviours: Any = None,
+                    agent_stage: str = "execution",
                     description: str = "") -> dict:
     """Compose the full AV-RAILS -> AV-PEF -> AV-VCS journey envelope.
 
@@ -161,6 +165,13 @@ def compose_journey(chain: dict, *, execution: str = "execution",
         # receipt so the consent is re-checkable offline, like the PEF frame.
         out["ac2"] = ac2_attestation(ac2_sealed, expected_sender=ac2_expected_sender)
         out["levels"].append("ac2")
+    if agent_event is not None:
+        # AI protection (av-agent): the agent's action is governed by a deployed
+        # keystone-agent policy before binding; a BLOCK is refused fail-closed and
+        # every firing is a content-addressed record bound to the execution link.
+        out["agent"] = compose_agent_guard(agent_event, agent_behaviours,
+                                           execution_ref=exec_ref, stage=agent_stage)
+        out["levels"].append("av-agent")
     if description:
         out["description"] = description
     return out
@@ -214,4 +225,7 @@ def verify_journey(envelope: dict, *, ac2_expected_sender: bytes | None = None) 
     if "ac2" in envelope:
         verify_ac2_attestation(envelope["ac2"], expected_sender=ac2_expected_sender)
         levels.append("ac2")
+    if "agent" in envelope:
+        verify_agent_guard(envelope["agent"], execution_ref=exec_ref)
+        levels.append("av-agent")
     return {"ok": True, "levels": levels, "execution_ref": exec_ref}

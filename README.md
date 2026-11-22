@@ -34,6 +34,19 @@ The AV-VCS `binding_ref` uses the exact `archive:bind` preimage of the public
 `algovoi-keystone-archive` bridge, so a binding Fabric emits is accepted by
 AV-VCS's Compliance Command Center with no vendor in the loop.
 
+## Design maps
+
+Hand-drawn maps of the composition (editable `.excalidraw` sources beside each
+PNG in [`docs/diagrams/`](docs/diagrams/)):
+
+![How Keystone sits inside Fabric](docs/diagrams/fabric-spine.png)
+
+![The full journey](docs/diagrams/journey-flow.png)
+
+![Trust boundary, Rule K](docs/diagrams/trust-boundary.png)
+
+![AI protection, the av-agent level](docs/diagrams/av-agent.png)
+
 ## Protocol conformance: x402 / AP2 / MPP / A2A
 
 Fabric gates every inbound message against a declared, fail-closed support
@@ -79,6 +92,43 @@ base and no network contact.
 | Evidence | settlement bound to the decision | PEF frame (`draft-hopley-x402-payment-evidence-frame`) |
 | Archive binding | journey tied to the sealed entry | AV-VCS `archive:bind` via `keystone_ref` |
 | Assurance | recomputable offline by the customer | independent `rfc8785` canonicalisation |
+| AI protection | agent action governed before binding; BLOCK refused | `algovoi-keystone-agent` Engine (`av-agent`) |
+| Consent | who approved the settlement | `avm-ac2` `verify_consent` (AC2) |
+
+## AI protection: the av-agent governance level
+
+Fabric composes the published [`algovoi-keystone-agent`](https://github.com/chopmob-cloud/algovoi-keystone)
+behaviour layer so an AI agent's action is **governed before it is bound**. A
+deployed policy (spend caps, scope fences, deny lists, required fields) is run
+against the action; a `BLOCK` is refused fail-closed, and every governance firing
+becomes a content-addressed `behaviour_ref` bound to the journey's execution
+link. Fabric adds no crypto: refs delegate to `keystone_ref`, event identity to
+`keystone_agent.Event.ref`, and policy evaluation to `keystone_agent.Engine`
+(`src/algovoi_fabric/agent.py`).
+
+```python
+from algovoi_fabric import compose_journey, verify_journey
+from algovoi_keystone_agent import Event
+from algovoi_keystone_agent.library import cap_charges
+
+journey = compose_journey(
+    chain, execution="execution",
+    agent_event=Event("execution", {"action_type": "charge", "amount": 50}),
+    agent_behaviours=[cap_charges(100, stage="execution")])
+assert "av-agent" in journey["levels"]
+assert verify_journey(journey)["ok"]        # offline; governance recomputed
+
+# an over-cap action is BLOCKED and refused before any envelope is emitted:
+# compose_journey(..., agent_event=Event("execution", {"amount": 500}), ...)
+#   -> FabricError
+```
+
+`verify_agent_guard` recomputes every `behaviour_ref` (tamper-evident), checks
+each is bound to the execution link and the event's own content address, refuses
+a `BLOCK` or a downgraded verdict, and can re-run the policy (`behaviours=...`)
+so even a self-consistent forged `ALLOW` is caught. An inert policy (a trigger
+that can never fire at the guard's stage) is refused, so governance theatre
+cannot pass as protection. Every refusal surfaces as `FabricError` (Rule K).
 
 The post-quantum protections (Falcon-1024 signing, ML-KEM-1024 authenticated
 encryption, RFC 3161 timestamping) and BYO-key/KMS/HSM custody belong to the
@@ -87,13 +137,20 @@ sealed entry those protections produce; it does not perform them in the core.
 
 ## Proof
 
-The core is proven against the **published** packages (`algovoi-keystone` 0.6.0,
-`algovoi-pef` 0.1.2, `algovoi-substrate` 0.5.1, `algovoi-keystone-connect` 0.5.0),
-not a private fork:
+The architecture — how Keystone sits inside Fabric as the trust substrate — is
+specified in [ARCHITECTURE.md](ARCHITECTURE.md), with every claim cited to source
+and re-proven by [`proofs/spine_proof.py`](proofs/spine_proof.py): **61 properties,
+each proven green on valid input and red on a planted defect** against the
+published packages (one command, usable as a gate).
 
-- **61 tests — 57 passed, 4 skipped placeholders**: 12 chain core, 12 full
-  journey, 37 protocol conformance. Each protection passes green on valid input
-  and goes red on a planted defect.
+The core is proven against the **published** packages (`algovoi-keystone` 0.6.0,
+`algovoi-pef` 0.1.2, `algovoi-substrate` 0.5.1, `algovoi-keystone-connect` 0.5.0,
+`algovoi-keystone-agent` 0.5.0), not a private fork:
+
+- **139 tests** — 135 passed, 4 skipped placeholders: 12 chain core, 12 full
+  journey, 37 protocol conformance (4 skipped), 28 AC2 consent, 28 security
+  hardening, 22 AI protection (av-agent). Each protection is green on valid input
+  and red on a planted defect.
 - **Byte-exact contract**: the composer reproduces the published
   `keystone-golden.json` references exactly, and the AV-VCS `binding_ref` is
   byte-identical to the canonical `keystone_ref` `archive:bind` preimage used by
@@ -106,11 +163,16 @@ not a private fork:
 - **Protocol gate mutation**: inverting the version-membership test turns 13
   conformance tests red; restoring returns them green — proven both on the
   source tree and on the *installed* wheel.
+- **AI-protection mutation**: each of the 12 av-agent guards (BLOCK refusal,
+  inert-policy coverage, no-firing refusal, behaviour_ref / event_ref /
+  binding_ref / policy_ref recompute, execution-ref match, verdict==strongest,
+  re-execution identity, and both journey wirings) disabled in turn makes its own
+  isolating test red; restoring returns 22 green, bytes identical.
 - **Clean-room build (VM2)**: the wheel is built from the staged source,
   installed into a fresh `python:3.12-slim` container with dependencies pulled
-  from PyPI, and the suite runs against the installed package — 57 passed,
-  4 skipped. The installed-wheel negative control goes red on the planted
-  mutant and green on restore.
+  from PyPI, and the suite runs against the installed package — 135 passed,
+  4 skipped; the spine proof reports 61/61. The installed-wheel negative control
+  goes red on the planted mutant and green on restore.
 - **Independent review**: Mistral (gating) and Claude (second opinion) both
   return CLEAN; the gating reviewer was first proven to BLOCK a planted
   inverted-version-gate mutant. `bandit` reports no issues.
@@ -145,7 +207,10 @@ assert result.ok and result.capped
 ```
 
 `@name` binds an earlier link by its computed reference; `@@name` is a literal
-escape. A forward or unknown reference raises `KeystoneError` (fail-closed).
+escape. A forward or unknown reference raises `FabricError` (fail-closed) — catch
+`FabricError`, not `KeystoneError`: the Fabric boundary translates every estate
+refusal so nothing leaks past it (trust-boundary Rule K, see
+[ARCHITECTURE.md](ARCHITECTURE.md) §4).
 
 The full journey adds the AV-PEF frame and the AV-VCS archive binding:
 
@@ -183,6 +248,7 @@ compose_protocol_chain("x402", "99", {})   # raises ProtocolError (fail-closed)
 ## Links
 
 - Verifier: [algovoi-keystone](https://github.com/chopmob-cloud/algovoi-keystone)
+- AI protection: [algovoi-keystone-agent](https://github.com/chopmob-cloud/algovoi-keystone)
 - Evidence frame: [algovoi-pef](https://github.com/chopmob-cloud/algovoi-pef)
 - AV-VCS: [algovoi-vcs](https://github.com/chopmob-cloud/algovoi-vcs)
 - AV-RAILS ↔ AV-VCS bridge: [AlgoVoi-Keystone-Connectors](https://github.com/chopmob-cloud/AlgoVoi-Keystone-Connectors)

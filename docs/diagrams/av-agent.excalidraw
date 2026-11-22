@@ -1,0 +1,475 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "algovoi-fabric",
+  "elements": [
+    {
+      "type": "text",
+      "id": "L71",
+      "x": 60,
+      "y": 28,
+      "width": 693.0,
+      "height": 35.0,
+      "text": "AI protection \u2014 the av-agent governance level",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "AI protection \u2014 the av-agent governance level",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L72",
+      "x": 60,
+      "y": 70,
+      "width": 712.8000000000001,
+      "height": 20.0,
+      "text": "Fabric composes keystone-agent: an agent's action is governed before it is bound.",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#757575",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "Fabric composes keystone-agent: an agent's action is governed before it is bound.",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r73",
+      "x": 60,
+      "y": 140,
+      "width": 250,
+      "height": 120,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t74",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t74",
+      "x": 70,
+      "y": 150,
+      "width": 230,
+      "height": 60.0,
+      "text": "agent action (event)\ncharge amount=50\nstage: execution",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r73",
+      "originalText": "agent action (event)\ncharge amount=50\nstage: execution",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r75",
+      "x": 400,
+      "y": 130,
+      "width": 290,
+      "height": 140,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t76",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t76",
+      "x": 410,
+      "y": 140,
+      "width": 270,
+      "height": 80.0,
+      "text": "keystone-agent Engine\npolicy: cap_charges<=100\nALLOW / FLAG / BLOCK\nBLOCK -> Denied, fail-closed",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r75",
+      "originalText": "keystone-agent Engine\npolicy: cap_charges<=100\nALLOW / FLAG / BLOCK\nBLOCK -> Denied, fail-closed",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r77",
+      "x": 780,
+      "y": 130,
+      "width": 300,
+      "height": 140,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t78",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t78",
+      "x": 790,
+      "y": 140,
+      "width": 280,
+      "height": 80.0,
+      "text": "behaviour_ref\nsha256 over RFC 8785 JCS\nbound to execution_ref\ntamper-evident record",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r77",
+      "originalText": "behaviour_ref\nsha256 over RFC 8785 JCS\nbound to execution_ref\ntamper-evident record",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "a79",
+      "x": 310,
+      "y": 200,
+      "width": 90,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          90,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r73",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r75",
+        "fixedPoint": [
+          0,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "boundElements": [
+        {
+          "id": "at80",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "at80",
+      "x": 315.0,
+      "y": 190.0,
+      "width": 80,
+      "height": 20.0,
+      "text": "dispatch",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "a79",
+      "originalText": "dispatch",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "a81",
+      "x": 690,
+      "y": 200,
+      "width": 90,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          90,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r75",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r77",
+        "fixedPoint": [
+          0,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "boundElements": [
+        {
+          "id": "at82",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "at82",
+      "x": 695.0,
+      "y": 190.0,
+      "width": 80,
+      "height": 20.0,
+      "text": "fires",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "a81",
+      "originalText": "fires",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "r83",
+      "x": 400,
+      "y": 340,
+      "width": 290,
+      "height": 110,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "id": "t84",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "t84",
+      "x": 410,
+      "y": 350,
+      "width": 270,
+      "height": 60.0,
+      "text": "av-agent journey level\nbinding_ref recomputes offline\nno BLOCK ever committed",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "r83",
+      "originalText": "av-agent journey level\nbinding_ref recomputes offline\nno BLOCK ever committed",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "a85",
+      "x": 930,
+      "y": 270,
+      "width": 240,
+      "height": 110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -240,
+          110
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "startBinding": {
+        "elementId": "r77",
+        "fixedPoint": [
+          0.5,
+          1
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "endBinding": {
+        "elementId": "r83",
+        "fixedPoint": [
+          1,
+          0.5
+        ],
+        "focus": 0,
+        "gap": 4
+      },
+      "boundElements": [
+        {
+          "id": "at86",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "at86",
+      "x": 770.0,
+      "y": 315.0,
+      "width": 80,
+      "height": 20.0,
+      "text": "binds",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "a85",
+      "originalText": "binds",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L87",
+      "x": 60,
+      "y": 360,
+      "width": 202.4,
+      "height": 20.0,
+      "text": "over-cap, inert policy,",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#c92a2a",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "over-cap, inert policy,",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L88",
+      "x": 60,
+      "y": 385,
+      "width": 220.00000000000003,
+      "height": 20.0,
+      "text": "tampered record or forged",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#c92a2a",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "tampered record or forged",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L89",
+      "x": 60,
+      "y": 410,
+      "width": 176.0,
+      "height": 20.0,
+      "text": "ALLOW -> FabricError",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#c92a2a",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "ALLOW -> FabricError",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L90",
+      "x": 60,
+      "y": 490,
+      "width": 742.5000000000001,
+      "height": 22.5,
+      "text": "Re-execution re-runs the policy: a self-consistent forgery is still caught.",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "strokeColor": "#2b8a3e",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "Re-execution re-runs the policy: a self-consistent forgery is still caught.",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "L91",
+      "x": 60,
+      "y": 525,
+      "width": 623.7,
+      "height": 17.5,
+      "text": "agent.py \u00b7 composes algovoi-keystone-agent 0.5.0 \u00b7 proven G01-G13 both directions",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "strokeColor": "#757575",
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "originalText": "agent.py \u00b7 composes algovoi-keystone-agent 0.5.0 \u00b7 proven G01-G13 both directions",
+      "autoResize": true
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

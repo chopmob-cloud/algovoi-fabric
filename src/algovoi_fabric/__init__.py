@@ -16,6 +16,13 @@ from .ac2 import (
     ac2_attestation,
     verify_ac2_attestation,
 )
+from .agent import (
+    agent_binding_ref,
+    compose_agent_guard,
+    verify_agent_guard,
+    agent_attestation,
+    verify_agent_attestation,
+)
 from .protocols import (
     ProtocolError,
     supported_matrix,
@@ -24,11 +31,13 @@ from .protocols import (
     compose_protocol_chain,
 )
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 __all__ = ["compose_chain", "verify", "FabricError",
            "compose_journey", "verify_journey", "archive_binding_ref",
            "ac2_binding_ref", "verify_ac2_consent", "compose_ac2_chain",
            "ac2_attestation", "verify_ac2_attestation",
+           "agent_binding_ref", "compose_agent_guard", "verify_agent_guard",
+           "agent_attestation", "verify_agent_attestation",
            "ProtocolError", "supported_matrix", "check_version",
            "protocol_face", "compose_protocol_chain",
            "__version__"]
