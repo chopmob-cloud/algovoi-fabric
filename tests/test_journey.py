@@ -6,8 +6,6 @@ Every level is proven green (valid passes) AND red (a planted defect is
 caught), and the AV-VCS binding is proven byte-identical to the canonical
 keystone_ref primitive that the public algovoi-keystone-archive bridge uses.
 """
-import copy
-
 import pytest
 
 from algovoi_fabric import (

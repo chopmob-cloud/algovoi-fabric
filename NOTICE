@@ -1,0 +1,28 @@
+algovoi-fabric
+Copyright 2026 AlgoVoi
+
+This software was created and is maintained by AlgoVoi, and is offered as a
+gift to the Algorand and Voi communities under the Apache License, Version 2.0.
+
+You are free to use, modify, and redistribute it. If you redistribute this
+software or a derivative of it, this NOTICE and the attribution to AlgoVoi
+must be retained (Apache-2.0, Section 4).
+
+algovoi-fabric is a composition core: it binds independently published
+protocols into one tamper-evident, offline-verifiable journey and claims
+nothing over any of them. It reuses their own verifiers rather than
+re-implementing cryptography or canonicalisation:
+
+  * AV-RAILS / algovoi-keystone and algovoi-keystone-connect, by AlgoVoi
+    (Apache-2.0): the decision chain and the canonical keystone_ref primitive.
+  * AV-PEF / algovoi-pef, by AlgoVoi (Apache-2.0): payment evidence frames.
+  * AV-VCS / algovoi-substrate, by AlgoVoi (Apache-2.0): sealed-archive bindings.
+  * avm-ac2 and avm-mesh, by AlgoVoi (Apache-2.0): AC2 settlement consent and
+    the sealed receipt format. AC2 (Agentic Communication and Control) is a
+    Draft specification published by the Algorand Foundation at
+    https://github.com/algorandfoundation/ac2; no AC2 code is bundled here.
+  * rfc8785 (Apache-2.0): JSON Canonicalization Scheme.
+
+"Algorand", "AC2" and "Voi" are the names and marks of their respective owners.
+Use of the name "AC2" here describes the protocol implemented and implies no
+endorsement by, or affiliation with, the Algorand Foundation.

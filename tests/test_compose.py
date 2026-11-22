@@ -9,7 +9,6 @@ import copy
 import pytest
 
 from algovoi_fabric import compose_chain, verify, FabricError
-from algovoi_keystone.verify import KeystoneError
 from algovoi_pef import build_pef, verify_pef
 
 # The published keystone-golden contract (chopmob-cloud/algovoi-keystone,
@@ -53,7 +52,7 @@ def _golden_links():
 
 def test_composer_reproduces_published_golden_refs():
     chain = compose_chain(_golden_links(), description="golden reproduction")
-    by_name = {l["name"]: l for l in chain["chain"]}
+    by_name = {link["name"]: link for link in chain["chain"]}
     for name, _pre, expected in GOLDEN:
         if expected is not None:
             assert by_name[name]["ref"] == expected, f"{name} ref drifted from published contract"
@@ -85,12 +84,12 @@ def test_tampering_the_cap_breaks_the_chain():
 
 
 def test_forward_reference_is_fail_closed():
-    with pytest.raises(KeystoneError):
+    with pytest.raises(FabricError):
         compose_chain([("a", {"x": "@b"}), ("b", {"y": 1})])
 
 
 def test_unknown_reference_is_fail_closed():
-    with pytest.raises(KeystoneError):
+    with pytest.raises(FabricError):
         compose_chain([("a", {"x": "@nonexistent"})])
 
 
@@ -180,5 +179,5 @@ def test_pef_evidence_frame_binds_and_verifies_offline():
     chain = compose_chain(links)
     assert verify(chain).ok is True
     # The execution link structurally binds the exact PEF frame id.
-    exec_pre = next(l["preimage"] for l in chain["chain"] if l["name"] == "execution")
+    exec_pre = next(link["preimage"] for link in chain["chain"] if link["name"] == "execution")
     assert exec_pre["settlement_frame_id"] == frame["frame_id"]

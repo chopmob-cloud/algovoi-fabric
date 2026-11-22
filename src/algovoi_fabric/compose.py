@@ -51,18 +51,31 @@ def compose_chain(
     """
     refs: dict[str, str] = {}
     chain: list[dict[str, Any]] = []
-    for name, preimage in links:
-        if not isinstance(name, str) or not name:
-            raise FabricError("each link needs a non-empty string name")
-        if not isinstance(preimage, dict):
-            raise FabricError(f"link '{name}' preimage must be a dict")
-        if name in refs:
-            raise FabricError(f"duplicate link name '{name}'")
-        # _resolve raises KeystoneError on a non-earlier reference (fail-closed).
-        resolved = _resolve(preimage, refs, name)
-        ref = _ref(resolved)
-        refs[name] = ref
-        chain.append({"name": name, "preimage": copy.deepcopy(preimage), "ref": ref})
+    try:
+        pairs = list(links)
+    except TypeError as exc:
+        raise FabricError("links must be an iterable of (name, preimage) pairs") from exc
+    try:
+        for item in pairs:
+            if not isinstance(item, (tuple, list)) or len(item) != 2:
+                raise FabricError("each link must be a (name, preimage) pair")
+            name, preimage = item
+            if not isinstance(name, str) or not name:
+                raise FabricError("each link needs a non-empty string name")
+            if not isinstance(preimage, dict):
+                raise FabricError(f"link '{name}' preimage must be a dict")
+            if name in refs:
+                raise FabricError(f"duplicate link name '{name}'")
+            # _resolve raises KeystoneError on a non-earlier reference
+            # (fail-closed). Translate that estate exception to FabricError so a
+            # caller's `except FabricError` refuses the hostile chain rather than
+            # letting a KeystoneError escape the fabric boundary (Rule K).
+            resolved = _resolve(preimage, refs, name)
+            ref = _ref(resolved)
+            refs[name] = ref
+            chain.append({"name": name, "preimage": copy.deepcopy(preimage), "ref": ref})
+    except KeystoneError as exc:
+        raise FabricError(str(exc)) from exc
     if not chain:
         raise FabricError("chain must contain at least one link")
     out: dict[str, Any] = {"schema": SCHEMA, "canon": CANON, "chain": chain}
@@ -75,4 +88,9 @@ def compose_chain(
 
 def verify(chain: dict[str, Any]):
     """Offline verification - delegates to the real keystone verifier."""
-    return verify_chain(chain)
+    try:
+        return verify_chain(chain)
+    except KeystoneError as exc:
+        # A structurally malformed chain is a refusal at the fabric boundary,
+        # not an estate exception escaping it (trust-boundary Rule K).
+        raise FabricError(str(exc)) from exc

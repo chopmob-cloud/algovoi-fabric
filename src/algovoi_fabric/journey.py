@@ -27,6 +27,7 @@ from typing import Any
 from algovoi_keystone_connect import keystone_ref
 from algovoi_pef import verify_pef
 
+from .ac2 import ac2_attestation, verify_ac2_attestation
 from .compose import FabricError, verify
 
 JOURNEY_SCHEMA = "algovoi-fabric-journey/v1"
@@ -45,6 +46,31 @@ def _execution_preimage(chain: dict, execution: str) -> dict:
         if link["name"] == execution:
             return link["preimage"]
     raise FabricError(f"journey needs an execution link named '{execution}'")
+
+
+def _validate_chain_shape(chain: Any) -> None:
+    """Refuse a malformed journey chain with FabricError (trust-boundary Rule K).
+
+    A journey binds a compose_chain() output; every link must carry a string
+    name, a string ref and a dict preimage. Without this guard a hostile chain
+    (a string/number ``chain``, a link missing name/ref/preimage) raised
+    TypeError/KeyError that escaped a caller's ``except FabricError``, and a
+    preimage-less execution link was emitted outright (fail-open).
+    """
+    if not isinstance(chain, dict):
+        raise FabricError("journey needs a composed keystone chain")
+    links = chain.get("chain")
+    if not isinstance(links, list) or not links:
+        raise FabricError("journey chain must contain a non-empty 'chain' array")
+    for i, link in enumerate(links):
+        if not isinstance(link, dict):
+            raise FabricError(f"journey chain link at index {i} must be a dict")
+        if not isinstance(link.get("name"), str) or not link["name"]:
+            raise FabricError(f"journey chain link at index {i} has no 'name'")
+        if not isinstance(link.get("ref"), str) or not link["ref"]:
+            raise FabricError(f"journey chain link {link['name']!r} has no 'ref'")
+        if not isinstance(link.get("preimage"), dict):
+            raise FabricError(f"journey chain link {link['name']!r} has no preimage dict")
 
 
 def archive_binding_ref(*, execution_ref: str, doc_hash: str,
@@ -72,6 +98,8 @@ def archive_binding_ref(*, execution_ref: str, doc_hash: str,
 def compose_journey(chain: dict, *, execution: str = "execution",
                     pef_frame: dict | None = None,
                     archive: dict | None = None,
+                    ac2_sealed: dict | None = None,
+                    ac2_expected_sender: bytes | None = None,
                     description: str = "") -> dict:
     """Compose the full AV-RAILS -> AV-PEF -> AV-VCS journey envelope.
 
@@ -89,6 +117,14 @@ def compose_journey(chain: dict, *, execution: str = "execution",
     """
     if not isinstance(chain, dict) or "chain" not in chain:
         raise FabricError("journey needs a composed keystone chain")
+    _validate_chain_shape(chain)
+    # Refuse a forged or unverifiable chain at compose time, not only at verify:
+    # binding must never silently trust a ref the keystone verifier would reject.
+    # verify_chain reports (ChainResult.ok) rather than raising on a ref mismatch,
+    # so the ok flag must be asserted explicitly to be fail-closed here.
+    chain_result = verify(chain)
+    if not getattr(chain_result, "ok", False):
+        raise FabricError("journey chain does not verify offline")
     exec_ref = _execution_ref(chain, execution)
     out: dict[str, Any] = {
         "schema": JOURNEY_SCHEMA,
@@ -119,22 +155,33 @@ def compose_journey(chain: dict, *, execution: str = "execution",
                           "entry_id": archive["entry_id"],
                           "seq": archive["seq"], "binding_ref": binding}
         out["levels"].append("av-vcs")
+    if ac2_sealed is not None:
+        # AC2 consent (Algorand/Voi): proof of who approved the settlement.
+        # Verified fail-closed before binding; the block carries the sealed
+        # receipt so the consent is re-checkable offline, like the PEF frame.
+        out["ac2"] = ac2_attestation(ac2_sealed, expected_sender=ac2_expected_sender)
+        out["levels"].append("ac2")
     if description:
         out["description"] = description
     return out
 
 
-def verify_journey(envelope: dict) -> dict:
+def verify_journey(envelope: dict, *, ac2_expected_sender: bytes | None = None) -> dict:
     """Offline verification of the whole journey, fail-closed at every level.
 
     Recomputes the AV-RAILS chain, the AV-PEF frame and the AV-VCS storage
     binding, and checks that the downstream levels anchor to the chain's own
     execution link. Any mismatch raises FabricError; a valid journey returns
     {"ok": True, "levels": [...], "execution_ref": ...}.
+
+    ac2_expected_sender: the same 32-byte authenticated STIB sender supplied at
+        compose time, needed to re-verify a sender_bound AC2 block (the binding
+        covers the reached level). Omitting it keeps the re-check fail-closed.
     """
     if not isinstance(envelope, dict) or envelope.get("schema") != JOURNEY_SCHEMA:
         raise FabricError("not a fabric journey envelope")
-    chain = envelope["chain"]
+    chain = envelope.get("chain")
+    _validate_chain_shape(chain)
     res = verify(chain)
     if res.ok is not True:
         raise FabricError("AV-RAILS chain failed offline verification")
@@ -145,6 +192,8 @@ def verify_journey(envelope: dict) -> dict:
     levels = ["av-rails"]
     if "pef_frame" in envelope:
         frame = envelope["pef_frame"]
+        if not isinstance(frame, dict):
+            raise FabricError("pef_frame must be a dict")
         if verify_pef(frame).get("valid") is not True:
             raise FabricError("AV-PEF frame failed offline verification")
         exec_pre = _execution_preimage(chain, execution)
@@ -153,6 +202,8 @@ def verify_journey(envelope: dict) -> dict:
         levels.append("av-pef")
     if "archive" in envelope:
         a = envelope["archive"]
+        if not isinstance(a, dict):
+            raise FabricError("archive attestation must be a dict")
         recomputed = archive_binding_ref(execution_ref=exec_ref,
                                          doc_hash=a.get("doc_hash"),
                                          entry_id=a.get("entry_id"),
@@ -160,4 +211,7 @@ def verify_journey(envelope: dict) -> dict:
         if recomputed != a.get("binding_ref"):
             raise FabricError("AV-VCS archive binding_ref does not recompute")
         levels.append("av-vcs")
+    if "ac2" in envelope:
+        verify_ac2_attestation(envelope["ac2"], expected_sender=ac2_expected_sender)
+        levels.append("ac2")
     return {"ok": True, "levels": levels, "execution_ref": exec_ref}
