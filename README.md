@@ -1,5 +1,8 @@
 # AlgoVoi Fabric
 
+
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+
 **The security composition core for agentic commerce.** Fabric turns an agent's
 payment action into a single, tamper-evident, fail-closed, **offline-verifiable**
 artefact that spans the whole journey: **AV-RAILS** authority and decision,
