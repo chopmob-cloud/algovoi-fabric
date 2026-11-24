@@ -130,6 +130,14 @@ so even a self-consistent forged `ALLOW` is caught. An inert policy (a trigger
 that can never fire at the guard's stage) is refused, so governance theatre
 cannot pass as protection. Every refusal surfaces as `FabricError` (Rule K).
 
+> **Spend authority vs behaviour.** The av-agent level governs an action against
+> a deployed policy (`cap_charges`, `behaviour_ref`). The standalone
+> [algovoi-agent-guard](https://github.com/chopmob-cloud/algovoi-agent-guard)
+> ([TypeScript](https://github.com/chopmob-cloud/algovoi-agent-guard-ts)) is a
+> different primitive: a *human-signed spend mandate* the agent cannot raise,
+> with receipts recomputable offline from public material. Fabric does not
+> compose it in the core; it is linked here so the two "guards" are not confused.
+
 The post-quantum protections (Falcon-1024 signing, ML-KEM-1024 authenticated
 encryption, RFC 3161 timestamping) and BYO-key/KMS/HSM custody belong to the
 AV-VCS engine and the estate's higher tiers. Fabric binds the journey to the
@@ -252,6 +260,7 @@ compose_protocol_chain("x402", "99", {})   # raises ProtocolError (fail-closed)
 - Evidence frame: [algovoi-pef](https://github.com/chopmob-cloud/algovoi-pef)
 - AV-VCS: [algovoi-vcs](https://github.com/chopmob-cloud/algovoi-vcs)
 - AV-RAILS ↔ AV-VCS bridge: [AlgoVoi-Keystone-Connectors](https://github.com/chopmob-cloud/AlgoVoi-Keystone-Connectors)
+- Spend-authority guard: [algovoi-agent-guard](https://github.com/chopmob-cloud/algovoi-agent-guard) ([TypeScript](https://github.com/chopmob-cloud/algovoi-agent-guard-ts)) — human-signed spend mandates with offline-verifiable receipts
 
 ## Licence
 
