@@ -1,6 +1,6 @@
 # AlgoVoi Fabric
 
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE) [![AlgoVoi-Keystone-Connectors](https://img.shields.io/badge/AlgoVoi--Keystone--Connectors-8A2BE2)](https://github.com/chopmob-cloud/AlgoVoi-Keystone-Connectors) [![algovoi-agent-guard](https://img.shields.io/badge/algovoi--agent--guard-8A2BE2)](https://github.com/chopmob-cloud/algovoi-agent-guard) [![algovoi-agent-guard-ts](https://img.shields.io/badge/algovoi--agent--guard--ts-8A2BE2)](https://github.com/chopmob-cloud/algovoi-agent-guard-ts) [![algovoi-keystone](https://img.shields.io/badge/algovoi--keystone-8A2BE2)](https://github.com/chopmob-cloud/algovoi-keystone) [![algovoi-pef](https://img.shields.io/badge/algovoi--pef-8A2BE2)](https://github.com/chopmob-cloud/algovoi-pef) [![algovoi-vcs](https://img.shields.io/badge/algovoi--vcs-8A2BE2)](https://github.com/chopmob-cloud/algovoi-vcs)
 
 **The security composition core for agentic commerce.** Fabric turns an agent's
 payment action into a single, tamper-evident, fail-closed, **offline-verifiable**
