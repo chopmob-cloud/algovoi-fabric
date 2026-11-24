@@ -1,6 +1,5 @@
 # AlgoVoi Fabric
 
-
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 
 **The security composition core for agentic commerce.** Fabric turns an agent's
